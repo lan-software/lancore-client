@@ -1,0 +1,42 @@
+{
+    "name": "lan-software/lancore-client",
+    "description": "Canonical LanCore Integration API client for Lan* satellite applications",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "illuminate/http": "^13.0",
+        "illuminate/support": "^13.0",
+        "illuminate/contracts": "^13.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.29",
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LanSoftware\\LanCoreClient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LanSoftware\\LanCoreClient\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LanSoftware\\LanCoreClient\\LanCoreServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
