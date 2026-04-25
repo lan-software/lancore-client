@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] — 2026-04-25
+
+### Changed
+- Test suite now also runs against Pest 4 (`pestphp/pest` constraint widened
+  to `^3.0 || ^4.0`). All 91 tests pass under both Pest 3 and Pest 4; the
+  `arch()` rules introduced in v0.1.3 remain compatible with `pest-plugin-arch`
+  v4.
+- CI: bumped `ramsey/composer-install` from v3 to v4 and
+  `codecov/codecov-action` from v5 to v6.
+
 ## [0.1.3] — 2026-04-25
 
 ### Added
@@ -40,7 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial Packagist publish.
 
-[Unreleased]: https://github.com/lan-software/lancore-client/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/lan-software/lancore-client/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/lan-software/lancore-client/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/lan-software/lancore-client/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/lan-software/lancore-client/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/lan-software/lancore-client/releases/tag/v0.1.1
