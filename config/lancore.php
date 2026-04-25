@@ -35,7 +35,7 @@ return [
 
     'app_slug' => env('LANCORE_APP_SLUG'),
 
-    'callback_url' => env('LANCORE_CALLBACK_URL', env('APP_URL', 'http://localhost').'/auth/callback'),
+    'callback_url' => env('LANCORE_CALLBACK_URL', env('APP_URL', 'http://localhost').'/auth/lancore/callback'),
 
     /*
     |--------------------------------------------------------------------------
