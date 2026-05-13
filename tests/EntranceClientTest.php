@@ -91,7 +91,7 @@ it('fetches entrance stats', function () {
         ]),
     ]);
 
-    $stats = $this->client->entrance()->stats(eventId: 1);
+    $stats = $this->client->entrance()->stats(eventId: (string) \Illuminate\Support\Str::ulid());
 
     expect($stats)->total->toBe(150);
 });
@@ -100,7 +100,7 @@ it('fetches events list', function () {
     Http::fake([
         '*/api/entrance/events' => Http::response([
             'events' => [
-                ['id' => 1, 'name' => 'LAN Party 2026'],
+                ['id' => (string) \Illuminate\Support\Str::ulid(), 'name' => 'LAN Party 2026'],
             ],
         ]),
     ]);

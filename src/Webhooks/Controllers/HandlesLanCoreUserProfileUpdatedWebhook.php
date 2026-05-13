@@ -29,7 +29,7 @@ abstract class HandlesLanCoreUserProfileUpdatedWebhook extends HandlesLanCoreWeb
         return null;
     }
 
-    abstract protected function resolveUser(int $lancoreUserId): ?Model;
+    abstract protected function resolveUser(string $lancoreUserId): ?Model;
 
     abstract protected function handle(Model $user, UserProfileUpdatedPayload $payload): void;
 }

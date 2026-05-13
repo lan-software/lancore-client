@@ -11,7 +11,7 @@ readonly class LanCoreUser
      * @param  list<string>  $roles
      */
     public function __construct(
-        public int $id,
+        public string $id,
         public string $username,
         public ?string $email = null,
         public ?string $locale = null,
@@ -32,7 +32,7 @@ readonly class LanCoreUser
         }
 
         return new self(
-            id: (int) $data['id'],
+            id: (string) $data['id'],
             username: (string) $data['username'],
             email: isset($data['email']) && is_string($data['email']) ? $data['email'] : null,
             locale: $data['locale'] ?? null,

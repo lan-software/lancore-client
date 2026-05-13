@@ -119,7 +119,7 @@ class EntranceClient
      *
      * @return array<string, mixed>
      */
-    public function stats(?int $eventId = null): array
+    public function stats(?string $eventId = null): array
     {
         return $this->client->request(
             fn (PendingRequest $http) => $http->get('/api/entrance/stats', array_filter([
@@ -131,7 +131,7 @@ class EntranceClient
     /**
      * Fetch available events from LanCore.
      *
-     * @return array<int, array{id: int, name: string, start_date: string|null, end_date: string|null}>
+     * @return array<int, array{id: string, name: string, start_date: string|null, end_date: string|null}>
      */
     public function events(): array
     {

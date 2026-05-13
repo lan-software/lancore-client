@@ -79,7 +79,7 @@ class LanCoreClient
      * @throws LanCoreRequestException
      * @throws InvalidLanCoreUserException
      */
-    public function resolveUserById(int $id): LanCoreUser
+    public function resolveUserById(string $id): LanCoreUser
     {
         $this->ensureEnabled();
 

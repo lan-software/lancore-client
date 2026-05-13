@@ -3,9 +3,12 @@
 use LanSoftware\LanCoreClient\DTOs\LanCoreUser;
 use LanSoftware\LanCoreClient\Exceptions\InvalidLanCoreUserException;
 
+const TEST_USER_ULID_A = '01JZ0Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0A';
+const TEST_USER_ULID_B = '01JZ0Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0B';
+
 it('creates from array with all fields', function () {
     $user = LanCoreUser::fromArray([
-        'id' => 1,
+        'id' => TEST_USER_ULID_A,
         'username' => 'testuser',
         'email' => 'test@example.com',
         'locale' => 'de',
@@ -15,7 +18,7 @@ it('creates from array with all fields', function () {
     ]);
 
     expect($user)
-        ->id->toBe(1)
+        ->id->toBe(TEST_USER_ULID_A)
         ->username->toBe('testuser')
         ->email->toBe('test@example.com')
         ->locale->toBe('de')
@@ -26,12 +29,12 @@ it('creates from array with all fields', function () {
 
 it('creates from array with minimal fields', function () {
     $user = LanCoreUser::fromArray([
-        'id' => 5,
+        'id' => TEST_USER_ULID_B,
         'username' => 'minimal',
     ]);
 
     expect($user)
-        ->id->toBe(5)
+        ->id->toBe(TEST_USER_ULID_B)
         ->username->toBe('minimal')
         ->email->toBeNull()
         ->locale->toBeNull()
@@ -42,7 +45,7 @@ it('creates from array with minimal fields', function () {
 
 it('prefers avatar_url over avatar key', function () {
     $user = LanCoreUser::fromArray([
-        'id' => 1,
+        'id' => TEST_USER_ULID_A,
         'username' => 'u',
         'avatar' => 'fallback.png',
         'avatar_url' => 'preferred.png',
@@ -53,7 +56,7 @@ it('prefers avatar_url over avatar key', function () {
 
 it('falls back to avatar key when avatar_url missing', function () {
     $user = LanCoreUser::fromArray([
-        'id' => 1,
+        'id' => TEST_USER_ULID_A,
         'username' => 'u',
         'avatar' => 'fallback.png',
     ]);
@@ -63,7 +66,7 @@ it('falls back to avatar key when avatar_url missing', function () {
 
 it('filters non-string roles', function () {
     $user = LanCoreUser::fromArray([
-        'id' => 1,
+        'id' => TEST_USER_ULID_A,
         'username' => 'u',
         'roles' => ['admin', 123, null, 'user'],
     ]);
@@ -76,12 +79,12 @@ it('throws InvalidLanCoreUserException when id is missing', function () {
 })->throws(InvalidLanCoreUserException::class);
 
 it('throws InvalidLanCoreUserException when username is missing', function () {
-    LanCoreUser::fromArray(['id' => 1]);
+    LanCoreUser::fromArray(['id' => TEST_USER_ULID_A]);
 })->throws(InvalidLanCoreUserException::class);
 
 it('converts to array', function () {
     $user = new LanCoreUser(
-        id: 1,
+        id: TEST_USER_ULID_A,
         username: 'test',
         email: 'test@test.com',
         roles: ['user'],
@@ -90,7 +93,7 @@ it('converts to array', function () {
     $array = $user->toArray();
 
     expect($array)
-        ->id->toBe(1)
+        ->id->toBe(TEST_USER_ULID_A)
         ->username->toBe('test')
         ->email->toBe('test@test.com')
         ->roles->toBe(['user']);

@@ -33,7 +33,7 @@ abstract class HandlesLanCoreUserRolesUpdatedWebhook extends HandlesLanCoreWebho
      * Resolve a local user model from a LanCore user ID.
      * Return null if the user does not exist locally.
      */
-    abstract protected function resolveUser(int $lancoreUserId): ?Model;
+    abstract protected function resolveUser(string $lancoreUserId): ?Model;
 
     /**
      * Synchronize the user's roles based on the webhook payload.

@@ -7,17 +7,17 @@ use Illuminate\Http\Request;
 readonly class IntegrationAccessedPayload extends WebhookPayload
 {
     public function __construct(
-        public int $integrationId,
-        public int $lancoreUserId,
+        public string $integrationId,
+        public string $lancoreUserId,
         public string $appSlug,
     ) {}
 
     public static function fromRequest(Request $request): static
     {
-        $integrationId = $request->integer('integration.id');
-        $userId = $request->integer('integration.user_id');
+        $integrationId = (string) $request->input('integration.id', '');
+        $userId = (string) $request->input('integration.user_id', '');
 
-        abort_unless($integrationId > 0 && $userId > 0, 422, 'Invalid payload.');
+        abort_unless(self::isUlid($integrationId) && self::isUlid($userId), 422, 'Invalid payload.');
 
         return new static(
             integrationId: $integrationId,

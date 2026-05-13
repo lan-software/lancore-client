@@ -10,15 +10,15 @@ readonly class UserProfileUpdatedPayload extends WebhookPayload
      * @param  array<string, mixed>  $changes
      */
     public function __construct(
-        public int $lancoreUserId,
+        public string $lancoreUserId,
         public array $changes,
     ) {}
 
     public static function fromRequest(Request $request): static
     {
-        $userId = $request->integer('user.id');
+        $userId = (string) $request->input('user.id', '');
 
-        abort_unless($userId > 0, 422, 'Invalid payload.');
+        abort_unless(self::isUlid($userId), 422, 'Invalid payload.');
 
         return new static(
             lancoreUserId: $userId,

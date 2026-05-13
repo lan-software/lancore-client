@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use LanSoftware\LanCoreClient\DTOs\LanCoreUser;
 use LanSoftware\LanCoreClient\Exceptions\InvalidLanCoreUserException;
 use LanSoftware\LanCoreClient\Exceptions\LanCoreDisabledException;
@@ -23,10 +24,12 @@ it('builds SSO authorize URL with app slug and callback', function () {
 });
 
 it('exchanges code and returns LanCoreUser DTO', function () {
+    $userId = (string) Str::ulid();
+
     Http::fake([
         '*/api/integration/sso/exchange' => Http::response([
             'data' => [
-                'id' => 42,
+                'id' => $userId,
                 'username' => 'testuser',
                 'email' => 'test@example.com',
                 'locale' => 'en',
@@ -41,7 +44,7 @@ it('exchanges code and returns LanCoreUser DTO', function () {
 
     expect($user)
         ->toBeInstanceOf(LanCoreUser::class)
-        ->id->toBe(42)
+        ->id->toBe($userId)
         ->username->toBe('testuser')
         ->email->toBe('test@example.com')
         ->locale->toBe('en')
@@ -96,7 +99,7 @@ it('throws LanCoreDisabledException when disabled', function () {
 it('sends Bearer token from config', function () {
     Http::fake([
         '*/api/integration/sso/exchange' => Http::response([
-            'data' => ['id' => 1, 'username' => 'u', 'roles' => []],
+            'data' => ['id' => (string) Str::ulid(), 'username' => 'u', 'roles' => []],
         ]),
     ]);
 
@@ -110,7 +113,7 @@ it('sends Bearer token from config', function () {
 it('configures retry and timeout from config', function () {
     Http::fake([
         '*/api/integration/sso/exchange' => Http::response([
-            'data' => ['id' => 1, 'username' => 'u', 'roles' => []],
+            'data' => ['id' => (string) Str::ulid(), 'username' => 'u', 'roles' => []],
         ]),
     ]);
 
@@ -128,23 +131,25 @@ it('configures retry and timeout from config', function () {
 });
 
 it('resolves user by id', function () {
+    $userId = (string) Str::ulid();
+
     Http::fake([
         '*/api/integration/user/resolve' => Http::response([
-            'data' => ['id' => 42, 'username' => 'found', 'roles' => ['user']],
+            'data' => ['id' => $userId, 'username' => 'found', 'roles' => ['user']],
         ]),
     ]);
 
-    $user = $this->client->resolveUserById(42);
+    $user = $this->client->resolveUserById($userId);
 
-    expect($user->id)->toBe(42);
+    expect($user->id)->toBe($userId);
 
-    Http::assertSent(fn ($request) => $request['user_id'] === 42);
+    Http::assertSent(fn ($request) => $request['user_id'] === $userId);
 });
 
 it('resolves user by email', function () {
     Http::fake([
         '*/api/integration/user/resolve' => Http::response([
-            'data' => ['id' => 7, 'username' => 'emailuser', 'email' => 'a@b.com', 'roles' => []],
+            'data' => ['id' => (string) Str::ulid(), 'username' => 'emailuser', 'email' => 'a@b.com', 'roles' => []],
         ]),
     ]);
 
@@ -158,7 +163,7 @@ it('resolves user by email', function () {
 it('fetches current user', function () {
     Http::fake([
         '*/api/integration/user/me' => Http::response([
-            'data' => ['id' => 1, 'username' => 'me', 'roles' => ['admin']],
+            'data' => ['id' => (string) Str::ulid(), 'username' => 'me', 'roles' => ['admin']],
         ]),
     ]);
 

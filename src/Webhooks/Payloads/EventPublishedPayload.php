@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 readonly class EventPublishedPayload extends WebhookPayload
 {
     public function __construct(
-        public int $eventId,
+        public string $eventId,
         public string $name,
         public ?string $startDate,
         public ?string $endDate,
@@ -15,9 +15,9 @@ readonly class EventPublishedPayload extends WebhookPayload
 
     public static function fromRequest(Request $request): static
     {
-        $id = $request->integer('event.id');
+        $id = (string) $request->input('event.id', '');
 
-        abort_unless($id > 0, 422, 'Invalid payload.');
+        abort_unless(self::isUlid($id), 422, 'Invalid payload.');
 
         return new static(
             eventId: $id,
