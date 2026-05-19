@@ -6,11 +6,11 @@
  * satellite documented. This file guards against the same class of regression.
  */
 
-it('exposes the canonical /auth/lancore/callback default for callback_url', function () {
+it('exposes the canonical /auth/callback default for callback_url', function () {
     $config = require __DIR__.'/../config/lancore.php';
 
     expect($config['callback_url'])
-        ->toEndWith('/auth/lancore/callback');
+        ->toEndWith('/auth/callback');
 });
 
 it('keeps lancore.base_url defaulting to http://lancore.lan', function () {

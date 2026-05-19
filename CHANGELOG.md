@@ -6,6 +6,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-05-19
+
+### Changed (BREAKING)
+- All LanCore user ID fields are now `string` (ULID) instead of `int`. Touches
+  the abstract `resolveUser()` signatures on `HandlesLanCoreUserRolesUpdatedWebhook`
+  and `HandlesLanCoreUserProfileUpdatedWebhook`, the typed `$lancoreUserId`
+  / `$userId` properties on every webhook payload (`UserRegistered`,
+  `UserProfileUpdated`, `UserRolesUpdated`, `AnnouncementPublished`,
+  `EventPublished`, `IntegrationAccessed`, `TicketPurchased`,
+  `NewsArticlePublished`), the `LanCoreUser` DTO, and the `EntranceClient` /
+  `LanCoreClient` user-lookup signatures. Satellites overriding any of these
+  methods must update their parameter types from `int` to `string`.
+
+### Fixed
+- Default `callback_url` now resolves to `…/auth/callback`, matching the route
+  every satellite actually registers. The previous default
+  (`…/auth/lancore/callback`) caused SSO callback 404s when satellites relied
+  on the default instead of overriding `LANCORE_CALLBACK_URL`. The
+  `DefaultConfigTest` regression guard has been re-pinned to the corrected
+  value.
+
+### Internal
+- `package-lock.json` added to `.gitignore`.
+
 ## [0.1.4] — 2026-04-25
 
 ### Changed
