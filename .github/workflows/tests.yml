@@ -33,7 +33,7 @@ jobs:
         run: vendor/bin/pest --compact --coverage-clover coverage.xml
 
       - name: Upload coverage to Codecov
-        if: matrix.php == '8.4'
+        if: ${{ !cancelled() && matrix.php == '8.4' }}
         uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

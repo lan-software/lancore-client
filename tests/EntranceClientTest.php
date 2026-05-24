@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use LanSoftware\LanCoreClient\Exceptions\LanCoreDisabledException;
 use LanSoftware\LanCoreClient\Exceptions\LanCoreUnavailableException;
 use LanSoftware\LanCoreClient\LanCoreClient;
@@ -91,7 +92,7 @@ it('fetches entrance stats', function () {
         ]),
     ]);
 
-    $stats = $this->client->entrance()->stats(eventId: (string) \Illuminate\Support\Str::ulid());
+    $stats = $this->client->entrance()->stats(eventId: (string) Str::ulid());
 
     expect($stats)->total->toBe(150);
 });
@@ -100,7 +101,7 @@ it('fetches events list', function () {
     Http::fake([
         '*/api/entrance/events' => Http::response([
             'events' => [
-                ['id' => (string) \Illuminate\Support\Str::ulid(), 'name' => 'LAN Party 2026'],
+                ['id' => (string) Str::ulid(), 'name' => 'LAN Party 2026'],
             ],
         ]),
     ]);
